@@ -1,0 +1,22 @@
+Return-Path: <newsletter@mail.shop.example>
+Received: from mail.shop.example (mail.shop.example [198.51.100.20])
+	by mx.example.com with ESMTP id def456
+	for <ivan@example.com>; Tue, 28 Oct 2026 10:00:02 +0100
+Authentication-Results: mx.example.com;
+	spf=pass smtp.mailfrom=mail.shop.example;
+	dkim=pass header.d=shop.example;
+	dmarc=pass header.from=shop.example
+From: "Shop Example" <newsletter@shop.example>
+To: <ivan@example.com>
+Subject: Your order has been shipped
+Date: Tue, 28 Oct 2026 10:00:00 +0100
+Message-ID: <x9y8z7@shop.example>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+
+Hello,
+
+your order #4471 is on its way. You can track it here:
+https://shop.example/orders/4471
+
+Thank you for shopping with us.
