@@ -24,6 +24,8 @@ def test_iocs_from_phish(phish):
     assert iocs["ips"] == ["203.0.113.45"]
     assert "bank-example.secure-pay.test" in iocs["domains"]
     assert "secure-pay.test" in iocs["domains"]
+    # The impersonated brand must not end up on a blocklist.
+    assert "bank.example" not in iocs["domains"]
     assert iocs["emails"] == ["bounce@mailer.secure-pay.test", "security@bank.example",
                               "support@secure-pay.test"]
     assert len(iocs["sha256"]) == 1

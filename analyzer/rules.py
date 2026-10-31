@@ -7,6 +7,16 @@ from analyzer.parse_eml import domain_of
 
 WEIGHTS = {"high": 3, "medium": 2, "low": 1}
 
+# Fixed MITRE ATT&CK mapping per red flag. A model asked to map techniques invented
+# wrong IDs in testing (T1566.003 for an attachment), so the mapping lives in code.
+MITRE = {
+    "dmarc_fail": "T1656 Impersonation",
+    "reply_to_mismatch": "T1656 Impersonation",
+    "ip_in_url": "T1566.002 Spearphishing Link",
+    "link_domain_mismatch": "T1566.002 Spearphishing Link",
+    "dangerous_attachment": "T1566.001 Spearphishing Attachment",
+}
+
 DANGEROUS_EXTENSIONS = {".html", ".htm", ".exe", ".scr", ".js", ".vbs", ".lnk",
                         ".iso", ".img", ".zip", ".rar", ".docm", ".xlsm"}
 
@@ -61,6 +71,11 @@ def check_red_flags(email_data):
         flag("urgency", "low", "Pressure words: " + ", ".join(found))
 
     return flags
+
+
+def mitre_techniques(flags):
+    """Unique techniques for the flags that were raised, in a stable order."""
+    return sorted({MITRE[f["id"]] for f in flags if f["id"] in MITRE})
 
 
 def score(flags):

@@ -32,8 +32,12 @@ def extract_iocs(email_data):
 
     addresses = {a for a in (email_data["from_address"], email_data["reply_to"],
                              email_data["return_path"]) if a}
-    for address in addresses:
-        domains.add(address.rsplit("@", 1)[-1])
+    # The From domain is often the brand being impersonated (a real bank), so it is
+    # not an IOC: blocking it would also block the real bank's mail.
+    for address in (email_data["reply_to"], email_data["return_path"]):
+        if address:
+            domains.add(address.rsplit("@", 1)[-1])
+    domains.discard(email_data["from_domain"])
 
     # IPs of the servers that relayed the message, e.g. "[203.0.113.45]".
     for header in email_data["received"]:
