@@ -7,13 +7,15 @@ def build_report(email_data, iocs, flags, total, rule_verdict, ai=None, ai_error
     lines = [
         f"# Phishing triage: {email_data['subject']}",
         "",
-        f"**Rule-based verdict:** {rule_verdict} (score {total})",
-        f"**MITRE ATT&CK:** {', '.join(mitre_techniques(flags)) or '-'}",
+        "## Verdict",
+        "",
+        f"- **Rule-based verdict:** {rule_verdict} (score {total})",
+        f"- **MITRE ATT&CK:** {', '.join(mitre_techniques(flags)) or '-'}",
     ]
 
     if ai:
         lines += [
-            f"**AI verdict:** {ai.get('verdict', '?')} (confidence: {ai.get('confidence', '?')})",
+            f"- **AI verdict:** {ai.get('verdict', '?')} (confidence: {ai.get('confidence', '?')})",
             "",
             "## AI summary",
             "",
